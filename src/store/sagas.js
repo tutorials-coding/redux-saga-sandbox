@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, all } from 'redux-saga/effects'
 import {
   USER_POSTS_FETCH_REQUESTED,
   USER_POSTS_FETCH_SUCCEEDED,
@@ -23,6 +23,14 @@ function* fetchUserPosts(action) {
   }
 }
 
-export function* saga() {
+export function* userPostsFetchRequestedWatcherSaga() {
   yield takeEvery(USER_POSTS_FETCH_REQUESTED, fetchUserPosts)
+}
+
+export function* someSaga() {
+  console.log('Some Saga')
+}
+
+export function* rootSaga() {
+  yield all([userPostsFetchRequestedWatcherSaga(), someSaga()])
 }

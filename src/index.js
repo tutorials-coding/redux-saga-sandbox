@@ -7,7 +7,7 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { rootReducer } from './store/reducers'
-import { saga } from './store/sagas'
+import { rootSaga } from './store/sagas'
 
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
@@ -20,7 +20,7 @@ const store = createStore(
   )
 )
 
-sagaMiddleware.run(saga)
+sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <React.StrictMode>
