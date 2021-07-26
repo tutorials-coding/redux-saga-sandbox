@@ -8,13 +8,17 @@ import { getUserPosts } from '../api/posts'
 
 function* fetchUserPosts(action) {
   try {
-    const userPosts = yield call(getUserPosts, action.payload.userId)
-    yield put({
+    const callResult = call(getUserPosts, action.payload.userId)
+    console.log('callResult', callResult)
+    const userPosts = yield callResult
+    const putResult = put({
       type: USER_POSTS_FETCH_SUCCEEDED,
       payload: {
         data: userPosts,
       },
     })
+    console.log('putResult', putResult)
+    yield putResult
   } catch (e) {
     yield put({
       type: USER_POSTS_FETCH_FAILED,
