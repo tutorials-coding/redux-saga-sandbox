@@ -8,6 +8,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { rootReducer } from './store/reducers'
 import { rootSaga } from './store/sagas'
+import { userPostsFetchRequestedWatcherSaga } from './store/sagas-with-action-channel'
 
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
@@ -20,7 +21,8 @@ const store = createStore(
   )
 )
 
-sagaMiddleware.run(rootSaga)
+// sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(userPostsFetchRequestedWatcherSaga)
 
 ReactDOM.render(
   <React.StrictMode>
