@@ -1,4 +1,5 @@
 import { call, put, take, actionChannel } from 'redux-saga/effects'
+import { buffers } from 'redux-saga'
 import {
   USER_POSTS_FETCH_REQUESTED,
   USER_POSTS_FETCH_SUCCEEDED,
@@ -28,7 +29,10 @@ function* fetchUserPosts(action) {
 }
 
 export function* userPostsFetchRequestedWatcherSaga() {
-  const requestChannel = yield actionChannel(USER_POSTS_FETCH_REQUESTED)
+  const requestChannel = yield actionChannel(
+    USER_POSTS_FETCH_REQUESTED,
+    buffers.none()
+  )
   while (true) {
     const action = yield take(requestChannel)
     console.log('action', action)
