@@ -10,6 +10,9 @@ function App() {
 
   const handleClick = () => {
     dispatch({ type: USER_POSTS_FETCH_REQUESTED, payload: { userId: 1 } })
+    dispatch({ type: USER_POSTS_FETCH_REQUESTED, payload: { userId: 1 } })
+    dispatch({ type: USER_POSTS_FETCH_REQUESTED, payload: { userId: 1 } })
+    dispatch({ type: USER_POSTS_FETCH_REQUESTED, payload: { userId: 1 } })
   }
 
   return (
