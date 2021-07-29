@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals'
 import { rootReducer } from './store/reducers/rootReducer'
 import { rootSaga } from './store/sagas'
 import { userPostsFetchRequestedWatcherSaga } from './store/sagas-with-action-channel'
+import { loginFlowSaga } from './store/sagas-login-flow'
 
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
@@ -22,7 +23,8 @@ const store = createStore(
 )
 
 // sagaMiddleware.run(rootSaga)
-sagaMiddleware.run(userPostsFetchRequestedWatcherSaga)
+// sagaMiddleware.run(userPostsFetchRequestedWatcherSaga)
+sagaMiddleware.run(loginFlowSaga)
 
 ReactDOM.render(
   <React.StrictMode>
