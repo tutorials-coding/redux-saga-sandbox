@@ -48,7 +48,6 @@ export const loginFlowReducer = (state = initState, action) => {
         ...state,
         error: null,
         token: null,
-        isLoginPending: false,
       }
     }
     default:
