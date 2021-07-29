@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { rootReducer } from './store/reducers'
+import { rootReducer } from './store/reducers/rootReducer'
 import { rootSaga } from './store/sagas'
 import { userPostsFetchRequestedWatcherSaga } from './store/sagas-with-action-channel'
 
