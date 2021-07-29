@@ -1,11 +1,13 @@
-import { take, call, put, fork } from 'redux-saga/effects'
+import { take, call, put, fork, cancel, cancelled } from 'redux-saga/effects'
 import * as userApi from '../api/user'
 
-import { LOGIN_ERROR, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT } from './actions'
-
-// This case is not covered by the flow:
-// Now LOGOUT is not missed, but
-// LOGOUT in the middle of an userApi.login call - need to cancel the authorize process
+import {
+  LOGIN_ERROR,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  STOP_LOGING_PENDING,
+} from './actions'
 
 function* authorize(username, password) {
   try {
@@ -15,16 +17,20 @@ function* authorize(username, password) {
     yield call(userApi.saveToken, token)
   } catch (error) {
     yield put({ type: LOGIN_ERROR, payload: { error } })
+  } finally {
+    if (yield cancelled()) {
+      yield put({ type: STOP_LOGING_PENDING })
+    }
   }
 }
 
 function* loginFlow() {
   while (true) {
     const { payload } = yield take(LOGIN_REQUEST)
-    yield fork(authorize, payload.username, payload.password)
-
+    const task = yield fork(authorize, payload.username, payload.password)
     // watching for two concurrent actions
-    yield take([LOGOUT, LOGIN_ERROR])
+    const action = yield take([LOGOUT, LOGIN_ERROR])
+    if (action.type === LOGOUT) yield cancel(task)
     yield call(userApi.clearToken)
   }
 }
