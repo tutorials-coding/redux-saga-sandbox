@@ -1,4 +1,4 @@
-import { fork, call, put, delay } from 'redux-saga/effects'
+import { fork, call, put, delay, spawn } from 'redux-saga/effects'
 import { getUserPosts } from '../api/posts'
 import { getUserAlbums } from '../api/albums'
 import { SAVE_USER_ALBUMS, SAVE_USER_POSTS } from './actions'
@@ -19,8 +19,8 @@ function* fetchPosts(userId) {
 }
 
 function* fetchUserData(userId) {
-  const postsTask = yield fork(fetchAlbums, userId)
-  const albumsTask = yield fork(fetchPosts, userId)
+  const postsTask = yield spawn(fetchAlbums, userId)
+  const albumsTask = yield spawn(fetchPosts, userId)
   yield delay(3000)
   console.log('done')
 }
