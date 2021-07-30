@@ -1,4 +1,4 @@
-import { USER_POSTS_FETCH_SUCCEEDED } from './actions'
+import { USER_POSTS_FETCH_SUCCEEDED } from '../actions'
 
 const initState = {
   posts: null,
