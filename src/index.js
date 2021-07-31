@@ -11,6 +11,7 @@ import { rootSaga } from './store/sagas'
 import { userPostsFetchRequestedWatcherSaga } from './store/sagas-with-action-channel'
 import { loginFlowSaga } from './store/sagas-login-flow'
 import { forkSaga } from './store/sagas-fork'
+import { takeSaga } from './store/sagas-takes'
 
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
@@ -26,7 +27,8 @@ const store = createStore(
 // sagaMiddleware.run(rootSaga)
 // sagaMiddleware.run(userPostsFetchRequestedWatcherSaga)
 // sagaMiddleware.run(loginFlowSaga)
-sagaMiddleware.run(forkSaga)
+// sagaMiddleware.run(forkSaga)
+sagaMiddleware.run(takeSaga)
 
 ReactDOM.render(
   <React.StrictMode>
