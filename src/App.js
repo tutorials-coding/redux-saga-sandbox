@@ -29,6 +29,25 @@ function App() {
       type: USER_POSTS_FETCH_REQUESTED,
       payload: { userId: 1, id: 4 },
     })
+
+    setTimeout(() => {
+      dispatch({
+        type: USER_POSTS_FETCH_REQUESTED,
+        payload: { userId: 1, id: 5 },
+      })
+      dispatch({
+        type: USER_POSTS_FETCH_REQUESTED,
+        payload: { userId: 1, id: 6 },
+      })
+      dispatch({
+        type: USER_POSTS_FETCH_REQUESTED,
+        payload: { userId: 1, id: 7 },
+      })
+      dispatch({
+        type: USER_POSTS_FETCH_REQUESTED,
+        payload: { userId: 1, id: 8 },
+      })
+    }, 60)
   }
 
   const handleLoginClick = () => {
