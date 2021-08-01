@@ -13,10 +13,41 @@ function App() {
   const token = useSelector((state) => state.user.token)
 
   const handleClick = () => {
-    dispatch({ type: USER_POSTS_FETCH_REQUESTED, payload: { userId: 1 } })
-    dispatch({ type: USER_POSTS_FETCH_REQUESTED, payload: { userId: 1 } })
-    dispatch({ type: USER_POSTS_FETCH_REQUESTED, payload: { userId: 1 } })
-    dispatch({ type: USER_POSTS_FETCH_REQUESTED, payload: { userId: 1 } })
+    dispatch({
+      type: USER_POSTS_FETCH_REQUESTED,
+      payload: { userId: 1, id: 1 },
+    })
+    dispatch({
+      type: USER_POSTS_FETCH_REQUESTED,
+      payload: { userId: 1, id: 2 },
+    })
+    dispatch({
+      type: USER_POSTS_FETCH_REQUESTED,
+      payload: { userId: 1, id: 3 },
+    })
+    dispatch({
+      type: USER_POSTS_FETCH_REQUESTED,
+      payload: { userId: 1, id: 4 },
+    })
+
+    setTimeout(() => {
+      dispatch({
+        type: USER_POSTS_FETCH_REQUESTED,
+        payload: { userId: 1, id: 5 },
+      })
+      dispatch({
+        type: USER_POSTS_FETCH_REQUESTED,
+        payload: { userId: 1, id: 6 },
+      })
+      dispatch({
+        type: USER_POSTS_FETCH_REQUESTED,
+        payload: { userId: 1, id: 7 },
+      })
+      dispatch({
+        type: USER_POSTS_FETCH_REQUESTED,
+        payload: { userId: 1, id: 8 },
+      })
+    }, 60)
   }
 
   const handleLoginClick = () => {
