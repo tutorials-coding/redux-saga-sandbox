@@ -1,10 +1,14 @@
-import { eventChannel } from 'redux-saga'
+import { eventChannel, END } from 'redux-saga'
 import { call, take } from 'redux-saga/effects'
 import { createEventProvider } from '../api/event-provider'
 
 const createEventProviderChannel = (eventProvider) => {
   return eventChannel((emit) => {
     const valueHandler = (event) => {
+      if (event.payload > 3) {
+        emit(END)
+        return
+      }
       emit(event.payload)
     }
 
@@ -12,6 +16,7 @@ const createEventProviderChannel = (eventProvider) => {
 
     return () => {
       eventProvider.unsubscribe('value', valueHandler)
+      console.log('unsubscribed')
     }
   })
 }
@@ -30,5 +35,7 @@ export function* eventChannelSaga() {
     }
   } catch (error) {
     console.log('error', error)
+  } finally {
+    console.log('event channel terminated')
   }
 }

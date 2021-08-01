@@ -9,7 +9,7 @@ export const createEventProvider = () => {
   setInterval(() => {
     value += 1
     triggerEvent('value', { payload: value })
-  }, 2000)
+  }, 1000)
 
   return {
     subscribe: (event, handler) => {
