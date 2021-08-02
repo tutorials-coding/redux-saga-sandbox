@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Button from 'react-bootstrap/Button'
 
 import { USER_POSTS_FETCH_REQUESTED } from './store/actions'
-import { LOGIN_REQUEST, LOGOUT } from './store/actions'
+import { LOGIN_REQUEST, LOGOUT, FILES_UPLOADING_START } from './store/actions'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
@@ -11,6 +11,9 @@ function App() {
   const isLoginPending = useSelector((state) => state.user.isLoginPending)
   const error = useSelector((state) => state.user.error)
   const token = useSelector((state) => state.user.token)
+  const filesUploadingProgress = useSelector(
+    (state) => state.app.filesUploadingProgress
+  )
 
   const handleClick = () => {
     dispatch({
@@ -63,6 +66,10 @@ function App() {
     dispatch({ type: LOGOUT })
   }
 
+  const handleUploadClick = () => {
+    dispatch({ type: FILES_UPLOADING_START })
+  }
+
   return (
     <div className="app__container">
       <Button onClick={handleClick}>Get posts</Button>
@@ -73,6 +80,10 @@ function App() {
         {isLoginPending && <p>Logging in...</p>}
         {error && <p>Error: {error}</p>}
         {token && <p>{token}</p>}
+      </div>
+      <div className="app__login-container">
+        <Button onClick={handleUploadClick}>Upload files</Button>
+        <p>Uploading progress {filesUploadingProgress}</p>
       </div>
     </div>
   )
