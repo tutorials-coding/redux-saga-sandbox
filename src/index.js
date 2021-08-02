@@ -13,6 +13,8 @@ import { loginFlowSaga } from './store/sagas-login-flow'
 import { forkSaga } from './store/sagas-fork'
 import { takeSaga } from './store/sagas-takes'
 import { eventChannelSaga } from './store/saga-event-channel'
+import { channelSaga } from './store/saga-channel'
+import { handleFilesUploading } from './store/saga-channel-upload'
 
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
@@ -30,7 +32,9 @@ const store = createStore(
 // sagaMiddleware.run(loginFlowSaga)
 // sagaMiddleware.run(forkSaga)
 // sagaMiddleware.run(takeSaga)
-sagaMiddleware.run(eventChannelSaga)
+// sagaMiddleware.run(eventChannelSaga)
+// sagaMiddleware.run(channelSaga)
+sagaMiddleware.run(handleFilesUploading)
 
 ReactDOM.render(
   <React.StrictMode>
