@@ -1,3 +1,4 @@
+import { runSaga } from 'redux-saga'
 import {
   call,
   put,
@@ -92,5 +93,71 @@ describe('fetchUserPosts branching', () => {
     )
 
     expect(gClone.next().done).toEqual(true)
+  })
+})
+
+// testing full saga
+describe('fetchUserPosts', () => {
+  const userId = 'user-id-1'
+  const action = {
+    payload: {
+      userId,
+    },
+  }
+
+  afterAll(() => {
+    jest.clearAllMocks()
+  })
+
+  it('puts user data to store if no errors', async () => {
+    const userPosts = [{ id: 'user-post-id-1' }]
+    postsApi.getUserPosts = jest.fn().mockResolvedValue(userPosts)
+
+    const dispatched = []
+    await runSaga(
+      {
+        dispatch: (action) => dispatched.push(action),
+        getState: () => ({ state: 'test' }),
+      },
+      fetchUserPosts,
+      action
+    ).toPromise()
+
+    expect(postsApi.getUserPosts).toHaveBeenCalledWith(userId)
+    expect(dispatched).toEqual([
+      {
+        type: USER_POSTS_FETCH_SUCCEEDED,
+        payload: {
+          data: userPosts,
+        },
+      },
+    ])
+  })
+
+  it('puts error data to store if errors was thrown', async () => {
+    const errorMessage = 'Request failed'
+    postsApi.getUserPosts = jest
+      .fn()
+      .mockRejectedValue({ message: errorMessage })
+
+    const dispatched = []
+    await runSaga(
+      {
+        dispatch: (action) => dispatched.push(action),
+        getState: () => ({ state: 'test' }),
+      },
+      fetchUserPosts,
+      action
+    ).toPromise()
+
+    expect(postsApi.getUserPosts).toHaveBeenCalledWith(userId)
+    expect(dispatched).toEqual([
+      {
+        type: USER_POSTS_FETCH_FAILED,
+        payload: {
+          message: errorMessage,
+        },
+      },
+    ])
   })
 })
