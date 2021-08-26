@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest, all } from 'redux-saga/effects'
+import { call, put, takeEvery, takeLatest, all, delay } from 'redux-saga/effects'
 import {
   USER_POSTS_FETCH_REQUESTED,
   USER_POSTS_FETCH_SUCCEEDED,
@@ -7,6 +7,7 @@ import {
 import { getUserPosts } from '../api/posts'
 
 export function* fetchUserPosts(action) {
+  yield delay(100)
   try {
     const userPosts = yield call(getUserPosts, action.payload.userId)
     yield put({
