@@ -8,7 +8,7 @@ import {
 } from 'redux-saga/effects'
 import { cloneableGenerator } from '@redux-saga/testing-utils'
 
-import { getUserPosts } from '../api/posts'
+import * as postsApi from '../api/posts'
 import { fetchUserPosts } from './sagas'
 import {
   USER_POSTS_FETCH_REQUESTED,
@@ -28,7 +28,7 @@ describe('fetchUserPosts happy path', () => {
     const g = fetchUserPosts(action)
     expect(g.next().value).toEqual(delay(100))
 
-    expect(g.next().value).toEqual(call(getUserPosts, userId))
+    expect(g.next().value).toEqual(call(postsApi.getUserPosts, userId))
 
     const userPosts = [{ id: 'user-post-id-1' }]
     expect(g.next(userPosts).value).toEqual(
@@ -58,7 +58,7 @@ describe('fetchUserPosts branching', () => {
   it('puts user data to store if no errors', () => {
     const gClone = g.clone()
 
-    expect(gClone.next().value).toEqual(call(getUserPosts, userId))
+    expect(gClone.next().value).toEqual(call(postsApi.getUserPosts, userId))
 
     const userPosts = [{ id: 'user-post-id-1' }]
     expect(gClone.next(userPosts).value).toEqual(
