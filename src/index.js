@@ -16,6 +16,7 @@ import { eventChannelSaga } from './store/saga-event-channel'
 import { channelSaga } from './store/saga-channel'
 import { handleFilesUploading } from './store/saga-channel-upload'
 import { userPostsFetchRequestedWatcherWithBufferSaga } from './store/sagas-action-channel-with-buffer'
+import { sagaThrottleDebounce } from './store/sagas-throttle-debounce'
 
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
@@ -36,7 +37,8 @@ const store = createStore(
 // sagaMiddleware.run(eventChannelSaga)
 // sagaMiddleware.run(channelSaga)
 // sagaMiddleware.run(handleFilesUploading)
-sagaMiddleware.run(userPostsFetchRequestedWatcherWithBufferSaga)
+// sagaMiddleware.run(userPostsFetchRequestedWatcherWithBufferSaga)
+sagaMiddleware.run(sagaThrottleDebounce)
 
 ReactDOM.render(
   <React.StrictMode>
