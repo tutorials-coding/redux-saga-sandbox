@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Button from 'react-bootstrap/Button'
 
-import { USER_POSTS_FETCH_REQUESTED } from './store/actions'
+import { requestUserPosts, USER_POSTS_FETCH_REQUESTED } from './store/actions'
 import { LOGIN_REQUEST, LOGOUT, FILES_UPLOADING_START } from './store/actions'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
@@ -16,41 +16,37 @@ function App() {
   )
 
   const handleClick = () => {
-    dispatch({
-      type: USER_POSTS_FETCH_REQUESTED,
-      payload: { userId: 1, id: 1 },
-    })
-    dispatch({
-      type: USER_POSTS_FETCH_REQUESTED,
-      payload: { userId: 1, id: 2 },
-    })
-    dispatch({
-      type: USER_POSTS_FETCH_REQUESTED,
-      payload: { userId: 1, id: 3 },
-    })
-    dispatch({
-      type: USER_POSTS_FETCH_REQUESTED,
-      payload: { userId: 1, id: 4 },
-    })
+    // try {
+    for (let dispatchId = 1; dispatchId <= 4; dispatchId++) {
+      dispatch(
+        requestUserPosts({
+          userId: 1,
+          dispatchId,
+        })
+      )
+    }
+    // } catch (e) {
+    //   console.log('error', e.message) // error Channel's Buffer overflow!
+    // }
 
-    setTimeout(() => {
-      dispatch({
-        type: USER_POSTS_FETCH_REQUESTED,
-        payload: { userId: 1, id: 5 },
-      })
-      dispatch({
-        type: USER_POSTS_FETCH_REQUESTED,
-        payload: { userId: 1, id: 6 },
-      })
-      dispatch({
-        type: USER_POSTS_FETCH_REQUESTED,
-        payload: { userId: 1, id: 7 },
-      })
-      dispatch({
-        type: USER_POSTS_FETCH_REQUESTED,
-        payload: { userId: 1, id: 8 },
-      })
-    }, 60)
+    // setTimeout(() => {
+    //   dispatch({
+    //     type: USER_POSTS_FETCH_REQUESTED,
+    //     payload: { userId: 1, id: 5 },
+    //   })
+    //   dispatch({
+    //     type: USER_POSTS_FETCH_REQUESTED,
+    //     payload: { userId: 1, id: 6 },
+    //   })
+    //   dispatch({
+    //     type: USER_POSTS_FETCH_REQUESTED,
+    //     payload: { userId: 1, id: 7 },
+    //   })
+    //   dispatch({
+    //     type: USER_POSTS_FETCH_REQUESTED,
+    //     payload: { userId: 1, id: 8 },
+    //   })
+    // }, 60)
   }
 
   const handleLoginClick = () => {
