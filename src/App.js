@@ -1,8 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
-import { requestUserPosts, USER_POSTS_FETCH_REQUESTED } from './store/actions'
-import { LOGIN_REQUEST, LOGOUT, FILES_UPLOADING_START } from './store/actions'
+import {
+  requestUserPosts,
+  USER_POSTS_FETCH_REQUESTED,
+  LOGIN_REQUEST,
+  LOGOUT,
+  FILES_UPLOADING_START,
+  CHANGE_USERNAME,
+} from './store/actions'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
@@ -66,6 +73,15 @@ function App() {
     dispatch({ type: FILES_UPLOADING_START })
   }
 
+  const handleUsernameChange = (event) => {
+    dispatch({
+      type: CHANGE_USERNAME,
+      payload: {
+        username: event.target.value,
+      },
+    })
+  }
+
   return (
     <div className="app__container">
       <Button onClick={handleClick}>Get posts</Button>
@@ -80,6 +96,15 @@ function App() {
       <div className="app__login-container">
         <Button onClick={handleUploadClick}>Upload files</Button>
         <p>Uploading progress {filesUploadingProgress}</p>
+      </div>
+
+      <div className="app__login-container">
+        <Form.Control
+          size="md"
+          type="text"
+          placeholder="Username"
+          onChange={handleUsernameChange}
+        />
       </div>
     </div>
   )

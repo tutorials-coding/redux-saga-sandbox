@@ -19,6 +19,15 @@ export const login = (username, password) => {
   })
 }
 
+export const saveFriendlyName = (username) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // console.log(`Saved: ${username}`)
+      resolve()
+    }, 100)
+  })
+}
+
 export const saveToken = (token) => {
   localStorage.setItem('token', token)
 }
