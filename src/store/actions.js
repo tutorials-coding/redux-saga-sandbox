@@ -1,6 +1,15 @@
 export const USER_POSTS_FETCH_REQUESTED = 'USER_POSTS_FETCH_REQUESTED'
 export const USER_POSTS_FETCH_SUCCEEDED = 'USER_POSTS_FETCH_SUCCEEDED'
 export const USER_POSTS_FETCH_FAILED = 'USER_POSTS_FETCH_FAILED'
+export const requestUserPosts = ({ userId, dispatchId }) => {
+  console.log(
+    `Received action: USER_POSTS_FETCH_REQUESTED; dispatch id: ${dispatchId}`
+  )
+  return {
+    type: USER_POSTS_FETCH_REQUESTED,
+    payload: { userId, id: dispatchId },
+  }
+}
 
 export const SAVE_USER_POSTS = 'SAVE_USER_POSTS'
 export const SAVE_USER_ALBUMS = 'SAVE_USER_ALBUMS'
