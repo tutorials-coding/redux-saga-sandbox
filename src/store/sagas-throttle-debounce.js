@@ -6,6 +6,8 @@ import {
   actionChannel,
   delay,
   debounce,
+  cancel,
+  takeLatest,
 } from 'redux-saga/effects'
 import { buffers } from 'redux-saga'
 
@@ -28,6 +30,27 @@ const throttle2 = (ms, pattern, task, ...args) =>
     }
   })
 
+function* debounce2(ms, pattern, task, ...args) {
+  let _task
+  while (true) {
+    const action = yield take(pattern)
+    if (_task) {
+      yield cancel(_task)
+    }
+    _task = yield fork(function* () {
+      yield delay(ms)
+      yield fork(task, ...args, action)
+    })
+  }
+}
+
+function* debounce3(ms, pattern, task, ...args) {
+  yield takeLatest(pattern, function* (action) {
+    yield delay(ms)
+    yield fork(task, ...args, action)
+  })
+}
+
 export function* sagaThrottleDebounce() {
   // compare with:
   // while (true) {
@@ -38,5 +61,7 @@ export function* sagaThrottleDebounce() {
   // yield throttle(500, CHANGE_USERNAME, changeUsername)
   // yield throttle2(500, CHANGE_USERNAME, changeUsername)
 
-  yield debounce(500, CHANGE_USERNAME, changeUsername)
+  // yield debounce(500, CHANGE_USERNAME, changeUsername)
+  // yield debounce2(500, CHANGE_USERNAME, changeUsername)
+  yield debounce3(500, CHANGE_USERNAME, changeUsername)
 }
