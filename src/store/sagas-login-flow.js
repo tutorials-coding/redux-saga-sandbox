@@ -9,7 +9,7 @@ import {
   STOP_LOGING_PENDING,
 } from './actions'
 
-function* authorize(username, password) {
+export function* authorize(username, password) {
   try {
     // fork, but how to get the result (token) - so, save token here
     const token = yield call(userApi.login, username, password)
@@ -24,7 +24,7 @@ function* authorize(username, password) {
   }
 }
 
-function* loginFlow() {
+export function* loginFlow() {
   while (true) {
     const { payload } = yield take(LOGIN_REQUEST)
     const task = yield fork(authorize, payload.username, payload.password)
