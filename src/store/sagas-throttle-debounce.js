@@ -5,6 +5,7 @@ import {
   throttle,
   actionChannel,
   delay,
+  debounce,
 } from 'redux-saga/effects'
 import { buffers } from 'redux-saga'
 
@@ -33,6 +34,9 @@ export function* sagaThrottleDebounce() {
   //   const action = yield take(CHANGE_USERNAME)
   //   yield fork(changeUsername, action)
   // }
+
   // yield throttle(500, CHANGE_USERNAME, changeUsername)
-  yield throttle2(500, CHANGE_USERNAME, changeUsername)
+  // yield throttle2(500, CHANGE_USERNAME, changeUsername)
+
+  yield debounce(500, CHANGE_USERNAME, changeUsername)
 }
