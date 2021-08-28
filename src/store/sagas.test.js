@@ -1,21 +1,10 @@
 import { runSaga } from 'redux-saga'
-import {
-  call,
-  put,
-  takeEvery,
-  takeLatest,
-  all,
-  delay,
-} from 'redux-saga/effects'
+import { call, put, delay } from 'redux-saga/effects'
 import { cloneableGenerator } from '@redux-saga/testing-utils'
 
 import * as postsApi from '../api/posts'
 import { fetchUserPosts } from './sagas'
-import {
-  USER_POSTS_FETCH_REQUESTED,
-  USER_POSTS_FETCH_SUCCEEDED,
-  USER_POSTS_FETCH_FAILED,
-} from './actions'
+import { USER_POSTS_FETCH_SUCCEEDED, USER_POSTS_FETCH_FAILED } from './actions'
 
 describe('fetchUserPosts happy path', () => {
   it('fetches user data', () => {
@@ -96,8 +85,7 @@ describe('fetchUserPosts branching', () => {
   })
 })
 
-// testing full saga
-describe('fetchUserPosts', () => {
+describe('fetchUserPosts full saga', () => {
   const userId = 'user-id-1'
   const action = {
     payload: {
