@@ -7,8 +7,9 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { rootReducer } from './store/reducers/rootReducer'
+
 import { rootSaga } from './store/sagas'
-import { userPostsFetchRequestedWatcherSaga } from './store/sagas-with-action-channel'
+import { userPostsFetchRequestedWatcherSaga } from './store/sagas-with-action-channel' // using context
 import { loginFlowSaga } from './store/sagas-login-flow'
 import { forkSaga } from './store/sagas-fork'
 import { takeSaga } from './store/sagas-takes'
@@ -18,8 +19,14 @@ import { handleFilesUploading } from './store/saga-channel-upload'
 import { userPostsFetchRequestedWatcherWithBufferSaga } from './store/sagas-action-channel-with-buffer'
 import { sagaThrottleDebounce } from './store/sagas-throttle-debounce'
 
+import * as postsApi from './api/posts'
+
 import createSagaMiddleware from 'redux-saga'
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    postsApi,
+  },
+})
 
 const store = createStore(
   rootReducer,
@@ -30,7 +37,7 @@ const store = createStore(
 )
 
 // sagaMiddleware.run(rootSaga)
-// sagaMiddleware.run(userPostsFetchRequestedWatcherSaga)
+sagaMiddleware.run(userPostsFetchRequestedWatcherSaga)
 // sagaMiddleware.run(loginFlowSaga)
 // sagaMiddleware.run(forkSaga)
 // sagaMiddleware.run(takeSaga)
@@ -38,7 +45,7 @@ const store = createStore(
 // sagaMiddleware.run(channelSaga)
 // sagaMiddleware.run(handleFilesUploading)
 // sagaMiddleware.run(userPostsFetchRequestedWatcherWithBufferSaga)
-sagaMiddleware.run(sagaThrottleDebounce)
+// sagaMiddleware.run(sagaThrottleDebounce)
 
 ReactDOM.render(
   <React.StrictMode>
