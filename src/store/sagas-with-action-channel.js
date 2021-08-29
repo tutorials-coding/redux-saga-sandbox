@@ -1,4 +1,11 @@
-import { call, put, take, actionChannel, getContext } from 'redux-saga/effects'
+import {
+  call,
+  put,
+  take,
+  actionChannel,
+  getContext,
+  setContext,
+} from 'redux-saga/effects'
 import { buffers } from 'redux-saga'
 import {
   USER_POSTS_FETCH_REQUESTED,
@@ -10,6 +17,9 @@ function* fetchUserPosts(action) {
   try {
     const postsApi = yield getContext('postsApi')
     const userPosts = yield call(postsApi.getUserPosts, action.payload.userId)
+
+    const appVersion = yield getContext('appVersion')
+    console.log('appVersion', appVersion)
 
     yield put({
       type: USER_POSTS_FETCH_SUCCEEDED,
@@ -30,6 +40,9 @@ export function* userPostsFetchRequestedWatcherSaga() {
     USER_POSTS_FETCH_REQUESTED,
     buffers.none()
   )
+  yield setContext({
+    appVersion: '1.0.0',
+  })
   while (true) {
     const action = yield take(requestChannel)
     yield call(fetchUserPosts, action)
