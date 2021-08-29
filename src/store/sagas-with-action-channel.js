@@ -8,7 +8,7 @@ import {
 
 function* fetchUserPosts(action) {
   try {
-    const postsApi = getContext('postsApi')
+    const postsApi = yield getContext('postsApi')
     const userPosts = yield call(postsApi.getUserPosts, action.payload.userId)
 
     yield put({
@@ -32,7 +32,6 @@ export function* userPostsFetchRequestedWatcherSaga() {
   )
   while (true) {
     const action = yield take(requestChannel)
-    console.log('action', action)
     yield call(fetchUserPosts, action)
   }
 }
