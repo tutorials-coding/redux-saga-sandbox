@@ -19,6 +19,7 @@ import { handleFilesUploading } from './store/saga-channel-upload'
 import { userPostsFetchRequestedWatcherWithBufferSaga } from './store/sagas-action-channel-with-buffer'
 import { sagaThrottleDebounce } from './store/sagas-throttle-debounce'
 import { userPostsFetchRequestedCallApplyWatcherSaga } from './store/saga-call-apply'
+import { sagaJoin } from './store/sagas-join'
 
 import * as postsApi from './api/posts'
 
@@ -47,7 +48,8 @@ const store = createStore(
 // sagaMiddleware.run(handleFilesUploading)
 // sagaMiddleware.run(userPostsFetchRequestedWatcherWithBufferSaga)
 // sagaMiddleware.run(sagaThrottleDebounce)
-sagaMiddleware.run(userPostsFetchRequestedCallApplyWatcherSaga)
+// sagaMiddleware.run(userPostsFetchRequestedCallApplyWatcherSaga)
+sagaMiddleware.run(sagaJoin)
 
 ReactDOM.render(
   <React.StrictMode>
