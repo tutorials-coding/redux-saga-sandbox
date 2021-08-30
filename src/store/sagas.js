@@ -27,7 +27,7 @@ export function* fetchUserPosts(action) {
     })
 
     // const data = yield select((state) => state.app.posts)
-    const data = yield select(getUserPostsSelector)
+    const data = yield select(getUserPostsSelector, 'ab')
     console.log('posts', data)
   } catch (e) {
     yield put({
