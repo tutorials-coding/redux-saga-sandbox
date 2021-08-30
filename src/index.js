@@ -8,7 +8,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { rootReducer } from './store/reducers/rootReducer'
 
-import { rootSaga } from './store/sagas'
+import { rootSaga } from './store/sagas' // using select
 import { userPostsFetchRequestedWatcherSaga } from './store/sagas-with-action-channel' // using context
 import { loginFlowSaga } from './store/sagas-login-flow'
 import { forkSaga } from './store/sagas-fork'
@@ -38,7 +38,7 @@ const store = createStore(
   )
 )
 
-// sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(rootSaga)
 // sagaMiddleware.run(userPostsFetchRequestedWatcherSaga)
 // sagaMiddleware.run(loginFlowSaga)
 // sagaMiddleware.run(forkSaga)
@@ -49,7 +49,7 @@ const store = createStore(
 // sagaMiddleware.run(userPostsFetchRequestedWatcherWithBufferSaga)
 // sagaMiddleware.run(sagaThrottleDebounce)
 // sagaMiddleware.run(userPostsFetchRequestedCallApplyWatcherSaga)
-sagaMiddleware.run(sagaJoin)
+// sagaMiddleware.run(sagaJoin)
 
 ReactDOM.render(
   <React.StrictMode>
