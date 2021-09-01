@@ -20,6 +20,7 @@ import { userPostsFetchRequestedWatcherWithBufferSaga } from './store/sagas-acti
 import { sagaThrottleDebounce } from './store/sagas-throttle-debounce'
 import { userPostsFetchRequestedCallApplyWatcherSaga } from './store/saga-call-apply'
 import { sagaJoin } from './store/sagas-join'
+import { raceExampleWatcherSaga } from './store/saga-race-all'
 
 import * as postsApi from './api/posts'
 
@@ -38,7 +39,7 @@ const store = createStore(
   )
 )
 
-sagaMiddleware.run(rootSaga)
+// sagaMiddleware.run(rootSaga)
 // sagaMiddleware.run(userPostsFetchRequestedWatcherSaga)
 // sagaMiddleware.run(loginFlowSaga)
 // sagaMiddleware.run(forkSaga)
@@ -50,6 +51,7 @@ sagaMiddleware.run(rootSaga)
 // sagaMiddleware.run(sagaThrottleDebounce)
 // sagaMiddleware.run(userPostsFetchRequestedCallApplyWatcherSaga)
 // sagaMiddleware.run(sagaJoin)
+sagaMiddleware.run(raceExampleWatcherSaga)
 
 ReactDOM.render(
   <React.StrictMode>

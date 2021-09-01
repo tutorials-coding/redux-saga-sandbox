@@ -9,6 +9,7 @@ import {
   LOGOUT,
   FILES_UPLOADING_START,
   CHANGE_USERNAME,
+  USER_POSTS_FETCH_CANCEL,
 } from './store/actions'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
@@ -22,16 +23,29 @@ function App() {
     (state) => state.app.filesUploadingProgress
   )
 
+  const handleCancelTask = () => {
+    dispatch({
+      type: USER_POSTS_FETCH_CANCEL,
+    })
+  }
+
   const handleClick = () => {
+    dispatch(
+      requestUserPosts({
+        userId: 1,
+        dispatchId: 1,
+      })
+    )
+
     // try {
-    for (let dispatchId = 1; dispatchId <= 4; dispatchId++) {
-      dispatch(
-        requestUserPosts({
-          userId: 1,
-          dispatchId,
-        })
-      )
-    }
+    //   for (let dispatchId = 1; dispatchId <= 4; dispatchId++) {
+    //     dispatch(
+    //       requestUserPosts({
+    //         userId: 1,
+    //         dispatchId,
+    //       })
+    //     )
+    //   }
     // } catch (e) {
     //   console.log('error', e.message) // error Channel's Buffer overflow!
     // }
@@ -85,6 +99,7 @@ function App() {
   return (
     <div className="app__container">
       <Button onClick={handleClick}>Get posts</Button>
+      <Button onClick={handleCancelTask}>Cancel task</Button>
 
       <div className="app__login-container">
         <Button onClick={handleLoginClick}>Log in</Button>
