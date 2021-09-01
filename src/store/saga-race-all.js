@@ -1,11 +1,14 @@
-import { call, put, delay, race, take } from 'redux-saga/effects'
+import { call, put, all, delay, race, take } from 'redux-saga/effects'
 import {
   USER_POSTS_FETCH_REQUESTED,
   USER_POSTS_FETCH_SUCCEEDED,
   USER_POSTS_FETCH_FAILED,
   USER_POSTS_FETCH_CANCEL,
+  SAVE_USER_ALBUMS,
+  SAVE_USER_POSTS,
 } from './actions'
 import { getUserPosts } from '../api/posts'
+import { getUserAlbums } from '../api/albums'
 
 export function* fetchUserPosts(action) {
   try {
@@ -44,5 +47,43 @@ export function* raceExampleWatcherSaga() {
     })
     console.log('userPosts', userPosts)
     console.log('userPostsCancelled', userPostsCancelled)
+  }
+}
+
+// all example
+function* fetchAlbums(userId) {
+  const data = yield call(getUserAlbums, userId)
+  yield put({
+    type: SAVE_USER_ALBUMS,
+    payload: { data },
+  })
+  return data
+}
+function* fetchPosts(userId) {
+  const data = yield call(getUserPosts, userId)
+  yield put({
+    type: SAVE_USER_POSTS,
+    payload: { data },
+  })
+  return data
+}
+
+export function* allExampleWatcherSaga() {
+  while (true) {
+    const action = yield take(USER_POSTS_FETCH_REQUESTED)
+
+    // const [userAlbums, userPosts] = yield all([
+    //   fetchAlbums(action.payload.userId),
+    //   fetchPosts(action.payload.userId),
+    // ])
+    // console.log('userAlbums', userAlbums)
+    // console.log('userPosts', userPosts)
+
+    const { userAlbums, userPosts } = yield all({
+      userAlbums: fetchAlbums(action.payload.userId),
+      userPosts: fetchPosts(action.payload.userId),
+    })
+    console.log('userAlbums', userAlbums)
+    console.log('userPosts', userPosts)
   }
 }
